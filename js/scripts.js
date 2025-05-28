@@ -60,10 +60,34 @@ function showModal(employee) {
     // Append modal to body
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 
+    const modalContainer = document.querySelector('.modal-container');
+
     // Close modal on click
     const closeBtn = document.getElementById('modal-close-btn');
-    closeBtn.addEventListener('click', () => {
-        const modalContainer = document.querySelector('.modal-container');
-        modalContainer.remove();
-    }); 
+    closeBtn.addEventListener('click', () => modalContainer.remove()); 
+
+    // Close modal on outside click
+    modalContainer.addEventListener('click', (e) => {
+        if (e.target === modalContainer) {
+            modalContainer.remove();
+        }
+    });
+    // Close modal on Escape key press
+    document.addEventListener('keydown', function handleEscape(e) {
+        if (e.key === 'Escape') {
+            modalContainer.remove();
+            document.removeEventListener('keydown', handleEscape); // ukloni event listener
+        }
+    });
 }
+
+// Escape key to close modal
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modalContainer = document.querySelector('.modal-container');
+        if (modalContainer) {
+            modalContainer.remove();
+        }
+    }
+});
+
