@@ -54,6 +54,10 @@ function showModal(employee) {
                     <p class="modal-text cap">${employee.location.state}, ${employee.location.country}</p>
                     <p class="modal-text">Birthday: ${formattedDob}</p>
                 </div>
+                <div class="modal-btn-container">
+                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                </div>
             </div>
         </div>
     `;
