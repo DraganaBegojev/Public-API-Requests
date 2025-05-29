@@ -7,7 +7,8 @@ fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca')
   .then(data => displayEmployees(data.results))
   .catch(error => console.error(error));
 
-function displayEmployees(employees) {
+function displayEmployees(data) {
+    employees = data; // Store fetched employees in the global variable
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = ''; 
 
@@ -30,13 +31,13 @@ function displayEmployees(employees) {
     cards.forEach(card => {
         card.addEventListener('click', () => {
             const index = card.getAttribute('data-index');
-            showModal(employees[index]);
+            showModal(employees[index], index);
         });
     });
 }
 
 // Function to show modal with employee details
-function showModal(employee) {
+function showModal(employee, index) {
     const dob = new Date(employee.dob.date);
     const formattedDob = `${dob.getMonth() + 1}/${dob.getDate()}/${dob.getFullYear()}`;
 
@@ -75,6 +76,23 @@ function showModal(employee) {
         if (e.target === modalContainer) {
             modalContainer.remove();
         }
+    });
+    // Add navigation functionality
+    const prevBtn = document.getElementById('modal-prev');
+    const nextBtn = document.getElementById('modal-next');
+
+    // Disable buttons if at the start or end
+    prevBtn.disabled = index === 0;
+    nextBtn.disabled = index === employees.length - 1;
+
+    prevBtn.addEventListener('click', () => {
+        modalContainer.remove();
+        showModal(employees[index - 1], index - 1);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        modalContainer.remove();
+        showModal(employees[index + 1], index + 1);
     });
 }
 
