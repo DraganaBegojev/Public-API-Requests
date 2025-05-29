@@ -72,13 +72,6 @@ function showModal(employee) {
             modalContainer.remove();
         }
     });
-    // Close modal on Escape key press
-    document.addEventListener('keydown', function handleEscape(e) {
-        if (e.key === 'Escape') {
-            modalContainer.remove();
-            document.removeEventListener('keydown', handleEscape); // ukloni event listener
-        }
-    });
 }
 
 // Escape key to close modal
@@ -91,3 +84,29 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Add search functionality
+const searchContainer = document.querySelector('.search-container');
+
+const searchFormHTML = `
+    <form action="#" method="get">
+        <input type="search" id="search-input" class="search-input" placeholder="Search...">
+        <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
+    </form>
+`;
+searchContainer.insertAdjacentHTML('beforeend', searchFormHTML);
+
+const searchInput = document.getElementById('search-input');
+const searchForm = document.querySelector('form');
+
+
+searchForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form reload
+    const query = searchInput.value.toLowerCase();
+
+    const employeeCards = document.querySelectorAll('.card');
+
+    employeeCards.forEach(card => {
+        const name = card.querySelector('.card-name').textContent.toLowerCase();
+        card.style.display = name.includes(query) ? '' : 'none';
+    });
+});
