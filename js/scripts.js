@@ -1,6 +1,7 @@
 // Fetch Data from Random User API 
 
 let employees = [];  // Store fetched employees globally
+let filteredEmployees = []; // Store filtered employees globally
 
 fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca')
   .then(response => response.json())
@@ -9,6 +10,8 @@ fetch('https://randomuser.me/api/?results=12&nat=us,gb,ca')
 
 function displayEmployees(data) {
     employees = data; // Store fetched employees in the global variable
+    filteredEmployees = data; // Initialize filteredEmployees with all employees
+    // Clear existing gallery content
     const gallery = document.querySelector('.gallery');
     gallery.innerHTML = ''; 
 
@@ -83,16 +86,16 @@ function showModal(employee, index) {
 
     // Disable buttons if at the start or end
     prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === employees.length - 1;
+    nextBtn.disabled = index === filteredEmployees.length - 1;
 
     prevBtn.addEventListener('click', () => {
         modalContainer.remove();
-        showModal(employees[index - 1], index - 1);
+        showModal(filteredEmployees[index - 1], index - 1);
     });
 
     nextBtn.addEventListener('click', () => {
         modalContainer.remove();
-        showModal(employees[index + 1], index + 1);
+        showModal(filteredEmployees[index + 1], index + 1);
     });
 }
 
@@ -131,4 +134,7 @@ searchForm.addEventListener('submit', (e) => {
         const name = card.querySelector('.card-name').textContent.toLowerCase();
         card.style.display = name.includes(query) ? '' : 'none';
     });
+    filteredEmployees = employees.filter(employee => 
+        `${employee.name.first} ${employee.name.last}`.toLowerCase().includes(query)
+    );
 });
