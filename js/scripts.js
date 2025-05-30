@@ -34,7 +34,9 @@ function displayEmployees(data) {
     cards.forEach(card => {
         card.addEventListener('click', () => {
             const index = parseInt(card.getAttribute('data-index'));
-            showModal(employees[index], index);
+            const employee = employees[index];
+            const filteredIndex = filteredEmployees.findIndex(emp => emp.email === employee.email);
+            showModal(filteredEmployees[filteredIndex], filteredIndex);
         });
     });
 }
@@ -85,17 +87,21 @@ function showModal(employee, index) {
     const nextBtn = document.getElementById('modal-next');
 
     // Disable buttons if at the start or end
-    prevBtn.disabled = index === 0;
-    nextBtn.disabled = index === filteredEmployees.length - 1;
+    prevBtn.disabled = filteredEmployees.length <= 1 || index === 0;
+    nextBtn.disabled = filteredEmployees.length <= 1 || index === filteredEmployees.length - 1;
 
     prevBtn.addEventListener('click', () => {
-        modalContainer.remove();
-        showModal(filteredEmployees[index - 1], index - 1);
+        if (index > 0) {
+            modalContainer.remove();
+            showModal(filteredEmployees[index - 1], index - 1);
+        }
     });
 
     nextBtn.addEventListener('click', () => {
-        modalContainer.remove();
-        showModal(filteredEmployees[index + 1], index + 1);
+        if (index < filteredEmployees.length - 1) {
+            modalContainer.remove();
+            showModal(filteredEmployees[index + 1], index + 1);
+        }
     });
 }
 
