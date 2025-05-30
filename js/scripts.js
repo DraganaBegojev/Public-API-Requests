@@ -30,7 +30,7 @@ function displayEmployees(data) {
     const cards = document.querySelectorAll('.card');
     cards.forEach(card => {
         card.addEventListener('click', () => {
-            const index = card.getAttribute('data-index');
+            const index = parseInt(card.getAttribute('data-index'));
             showModal(employees[index], index);
         });
     });
