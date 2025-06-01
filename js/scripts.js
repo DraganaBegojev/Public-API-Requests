@@ -57,7 +57,13 @@ function showModal(employee, index) {
                     <p class="modal-text cap">${employee.location.city}</p>
                     <hr>
                     <p class="modal-text">${employee.cell}</p>
-                    <p class="modal-text cap">${employee.location.state}, ${employee.location.country}</p>
+                    <p class="modal-text">
+                        ${employee.location.street.number} ${employee.location.street.name}, ${employee.location.state}
+                    </p>
+                    <p class="modal-text">
+                         ${employee.location.country} ${employee.location.postcode}
+                    </p>
+             
                     <p class="modal-text">Birthday: ${formattedDob}</p>
                 </div>
                 <div class="modal-btn-container">
