@@ -210,6 +210,10 @@ header h1 {
   opacity: 0.6;            
 }
 
+.modal-close-btn:hover {
+    background: rgba(151, 0, 0, 0.9);
+}
+
 
 /* ===================================== 
    Media Queries
